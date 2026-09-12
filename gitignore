@@ -1,0 +1,12 @@
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+.idea/
+.DS_Store
+
+# مهم: بر خلافِ اکثرِ پروژه‌های اندروید، فایلِ کیستور اینجا عمداً nadide
+# می‌شود چون خودِ ایده این است که بدونِ هیچ GitHub Secret ای، مستقیم از
+# روی همین فایلِ کامیت‌شده امضا انجام شود.
+!app/keystore/release.keystore
