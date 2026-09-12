@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'ir.echopaint.game'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "ir.echopaint.game"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("keystore/release.keystore")
+            storePassword "EchoPaint@2026Key!"
+            keyAlias "echopaintkey"
+            keyPassword "EchoPaint@2026Key!"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding false
+    }
+
+    packagingOptions {
+        resources {
+            excludes += [
+                'META-INF/DEPENDENCIES',
+                'META-INF/LICENSE',
+                'META-INF/LICENSE.txt',
+                'META-INF/NOTICE',
+                'META-INF/NOTICE.txt',
+                'META-INF/*.kotlin_module'
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    def tapsellPlus = "2.3.2"
+    implementation("ir.tapsell.plus:tapsell-plus-sdk-android:$tapsellPlus")
+}
+
+// همان مشکلِ نسخه‌ی کاتلین که در پروژه‌ی قبلی (هجوم) هم پیش آمد: SDK تپسل
+// یک kotlin-stdlib-jdk7/jdk8 قدیمی می‌آورد که با نسخه‌ی جدیدترِ بقیه‌ی
+// وابستگی‌ها تداخل پیدا می‌کند. این بخش همه را روی یک نسخه ثابت می‌کند.
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22"
+        force "org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22"
+    }
+}
